@@ -1,0 +1,53 @@
+form#create-nationality{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 10px;
+}
+
+img#nationality-pic{
+    max-height: 200px;
+}
+
+ul#list{
+    list-style-type: none;
+    display: flex;
+    row-gap: 20px;
+}
+
+img.nationality-pic, img.edit_img{
+    height: 40px;
+    width: 40px;
+    object-fit: contain;
+    border-radius: 5px;
+}
+
+div.nationality-informaion{
+    justify-content: space-between;
+}
+
+li.nationality-card{
+    display: flex;
+    flex-direction: row;
+    column-gap: 20px;
+    align-items: center;
+    padding: 10px 40px 10px 10px;
+    border: 1px solid #00000000;
+    border-radius: 10px;
+    justify-content: space-between;
+    box-shadow: 1px 1px 10px 0px #00000030;
+}
+
+div.nationality-icons, div.nationality-info{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 20px;
+}
+
+section.nationality-edit > form{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 20px;
+}

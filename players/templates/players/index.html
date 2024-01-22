@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogadores</title>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}?version=5" media="screen" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/create-player.css' %}?version=5" media="screen" />
+
+    <!-- fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <!-- icones -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+
+    <script type="module" defer src="{% static 'scripts/token.js' %}?version=1"></script>
+
+</head>
+<body>
+    <form id="create-player" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <h1 class="title">Criar jogador</h1>
+        <img id="new-player-pic" src="{% static 'img/default_pfp.webp' %}">
+        {{ form }}  
+        <button type="submit" id="create-player">REGISTRAR JOGADOR</button>
+    </form>
+    
+    <h1 class="title">Pesquisar por jogadores</h1>
+    <form>
+        <input oninput="search_player()" id="search-player" placeholder='Pesquise pelas lendas...' type="text">
+    </form>
+
+    <script>
+        function clone_select(el){
+            const element = el.parentNode.querySelector('div')
+            const id = element.getAttribute('data-id')
+            
+            const cloned_nationality = document.querySelector('select#id_nacionalidade').cloneNode(true)
+            const cloned_time = document.querySelector('select#id_time').cloneNode(true)
+            
+            cloned_nationality.removeAttribute('id')
+            cloned_time.removeAttribute('id')
+            el.removeAttribute('onload')
+
+            cloned_nationality.setAttribute('data-id', id)
+            cloned_time.setAttribute('data-id', id)
+            cloned_nationality.setAttribute('class', 'edit-player-nationality')
+            cloned_time.setAttribute('class', 'edit-player-time')
+
+            element.appendChild(cloned_nationality)
+            element.appendChild(cloned_time)
+        }
+    </script>
+    
+    {% if todos_jogadores %}
+        <ul id="list" class="d-flex-column">
+        {% for jogador in todos_jogadores %}
+            <li class="player-card" data-id="{{jogador.id}}" id="player-{{jogador.id}}">
+                <div class="player-info">
+                    <img class="player-pic" src="../{{jogador.img}}">
+                    <span class="player-name">{{jogador.nome}}</span>
+                </div>
+                <div class="player-icons">
+                    <img class="player-nationality" src="../{{jogador.get_nacionalidade.img}}">
+                    <img class="player-club" src="../{{jogador.get_time.img}}">
+                    <button data-id="{{jogador.id}}" onclick="toggle_edit(this)" class="btn"><i class="fa fa-edit link-danger"></i></button>
+                    <a class="btn" href="{% url 'delete_jogador' jogador.id %}"><i class="fa fa-trash link-danger"></i></a>
+                </div>
+                <section class="player-edit d-none" data-id="{{jogador.id}}">
+                    <img class="player-edit-pic" src="../{{jogador.img}}" onload="clone_select(this)">
+                    <input onchange="update_edit_img(this)" class="edit-player-img" type="file">
+                    <input class="edit-player-name" type="text" placeholder="Novo nome">
+                    <div class="select-edit" data-id="{{jogador.id}}"></div>
+                    <button type="submit" data-id="{{jogador.id}}" onclick="update_jogador(event, 'update/', this)" type="submit">SALVAR <i class="fa fa-edit"></i></button>
+                    <a data-id="{{jogador.id}}" onclick="toggle_edit(this)"><i class="fa fa-times"></i></a>
+                </section>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Não tem :(</p>
+    {% endif %}
+</body>
+    <script defer type="module" src="{% static 'scripts/create-player.js' %}?version=18"></script>
+</html>

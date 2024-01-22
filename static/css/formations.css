@@ -1,0 +1,33 @@
+div.player-icon{
+    position: absolute;
+}
+
+div.player-circle{
+    height: 60px;
+    width: 60px;
+    border-radius: 60px;
+    background-color: #00000090;
+    border: 2px dotted #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+span.add-player{
+    position: absolute;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+form#create-formation{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 10px;
+}
+
+img#campo{
+    border: 1px solid #000;
+}

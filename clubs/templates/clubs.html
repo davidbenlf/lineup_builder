@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>clubs</title>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}?version=7" media="screen" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/clubs.css' %}?version=7" media="screen" />
+
+    <!-- fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <!-- icones -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+
+    <script type="module" defer src="{% static 'scripts/token.js' %}?version=1"></script>
+</head>
+<body>
+    <h1 class="title">Criar time</h1>
+    <form id="create-club" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <img id="club-pic" src="{% static 'img/default-club.webp' %}">
+        {{ form }}
+        <button type="submit" id="create-club">REGISTRAR time</button>
+    </form>
+    <h1 class="title">Editar/Pesquisar times</h1>
+    <input type="text" placeholder="Pesquisar por times...">
+    <div>
+        {% if todos_times %}
+        <ul id="list" class="d-flex-column">
+        {% for club in todos_times %}
+            <li class="club-card" id="club-{{club.id}}">
+                    <div class="club-info">
+                        <img class="club-pic" src="../{{club.img}}">
+                        <span class="club-name">{{club.nome}}</span>
+                    </div>
+                    <div class="club-icons">
+                        <button onclick="toggle_edit(this.parentNode.parentNode)" class="btn"><i class="fa fa-edit link-danger"></i></button>
+                        <a class="btn" href="{% url 'delete_time' club.id %}"><i class="fa fa-trash link-danger"></i></a>
+                    </div>
+                <section class="club-edit d-none">
+                    <form id="club-edit-{{club.id}}">
+                        <img class="edit_img" src="../{{club.img}}">
+                        <input onchange="update_edit_img(this.parentNode, this)" class="edit-club-img" type="file" accept="image/*" required id="id_edit_img">
+                        <input class="edit-club-name" type="text" placeholder="novo nome">
+                        <button type="submit" data-id="{{club.id}}" onclick="update_club(event, 'update/', this)" type="submit">SALVAR <i class="fa fa-edit"></i></button>
+                        <a onclick="toggle_edit(this.parentNode.parentNode.parentNode)"><i class="fa fa-times"></i></a>
+                    </form>
+                </section>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Não tem :(</p>
+    {% endif %}
+    </div>
+</body>
+<script type="module" defer src="{% static 'scripts/clubs.js' %}?version=9"></script>
+
+</html>

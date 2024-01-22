@@ -1,0 +1,65 @@
+img#new-player-pic{
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+form#create-player{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 10px;
+}
+
+/* pesquisar jogadores */
+
+img.player-pic, img.player-nationality, img.player-club, img.player-edit-pic{
+    height: 60px;
+    width: 60px;
+    object-fit: contain;
+    border-radius: 5px;
+}
+img.player-pic, img.player-edit-pic{
+    object-fit: cover;
+    border-radius: 60px;
+    border: 1px solid #00000070;
+}
+
+ul#list{
+    list-style-type: none;
+    display: flex;
+    row-gap: 20px;
+}
+
+/* player card */
+li.player-card{
+    display: flex;
+    flex-direction: row;
+    column-gap: 20px;
+    align-items: center;
+    padding: 10px 40px 10px 10px;
+    border: 1px solid #00000000;
+    border-radius: 10px;
+    justify-content: space-between;
+    box-shadow: 1px 1px 10px 0px #00000030;
+}
+
+span.player-name{
+    font-weight: 500;
+}
+
+div.player-icons, div.player-info{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 20px;
+}
+
+section.player-edit, section.player-edit > div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 20px;
+}

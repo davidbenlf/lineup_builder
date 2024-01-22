@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formações</title>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}?version=6" media="screen" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/formations.css' %}?version=7" media="screen" />
+
+    <!-- fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <!-- icones -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+
+    <script type="module" defer src="{% static 'scripts/token.js' %}?version=1"></script>
+
+    <script type="module" defer src="{% static 'scripts/formations.js' %}?version=3"></script>
+</head>
+<body>
+    <h1 class="title">Criar Formação</h1>
+    <section id="formation">
+        {% for number in numbers %}
+            <div draggable="true" class="player-icon" id="player-{{number}}">
+                <div class="player-circle">
+                    <img>
+                    <span class="add-player">{{number}} +</span>
+                </div>
+                <div class="player-info">
+                    <span class="player-name"></span>
+                </div>
+            </div>
+        {% endfor %}
+        <img id="campo" height="500px" src="{% static 'img/soccer_field.webp' %}">
+    </section>
+    
+    <form id="create-formation">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit" id="btn-create-formation">REGISTRAR FORMAÇÃO</button>
+    </form>
+</body>
+</html>

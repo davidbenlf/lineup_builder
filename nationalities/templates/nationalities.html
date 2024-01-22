@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nacionalidades</title>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}?version=6" media="screen" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/nationalities.css' %}?version=6" media="screen" />
+
+    <!-- fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <!-- icones -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+
+    <script type="module" defer src="{% static 'scripts/token.js' %}?version=1"></script>
+</head>
+<body>
+    <h1 class="title">Criar nacionalidade</h1>
+    <form id="create-nationality" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <img id="nationality-pic" src="{% static 'img/default-nationality.webp' %}">
+        {{ form }}
+        <button type="submit" id="create-nationality">REGISTRAR NACIONALIDADE</button>
+    </form>
+    <h1 class="title">Editar/Pesquisar nacionalidades</h1>
+    <input type="text" placeholder="Pesquisar por nacionalidades...">
+    <div>
+        {% if todas_nacionalidades %}
+        <ul id="list" class="d-flex-column">
+        {% for nacionalidade in todas_nacionalidades %}
+            <li class="nationality-card" id="nationality-{{nacionalidade.id}}">
+                    <div class="nationality-info">
+                        <img class="nationality-pic" src="../{{nacionalidade.img}}">
+                        <span class="nationality-name">{{nacionalidade.nome}}</span>
+                    </div>
+                    <div class="nationality-icons">
+                        <button onclick="toggle_edit(this.parentNode.parentNode)" class="btn"><i class="fa fa-edit link-danger"></i></button>
+                        <a class="btn" href="{% url 'delete_nacionalidade' nacionalidade.id %}"><i class="fa fa-trash link-danger"></i></a>
+                    </div>
+                <section class="nationality-edit d-none">
+                    <form id="nationality-edit-{{nacionalidade.id}}">
+                        <img class="edit_img" src="../{{nacionalidade.img}}">
+                        <input onchange="update_edit_img(this.parentNode, this)" class="edit-nationality-img" type="file" accept="image/*" required id="id_edit_img">
+                        <input class="edit-nationality-name" type="text" placeholder="novo nome">
+                        <button type="submit" data-id="{{nacionalidade.id}}" onclick="update_nationality(event, 'update/', this)" type="submit">SALVAR <i class="fa fa-edit"></i></button>
+                        <a onclick="toggle_edit(this.parentNode.parentNode.parentNode)"><i class="fa fa-times"></i></a>
+                    </form>
+                </section>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Não tem :(</p>
+    {% endif %}
+    </div>
+</body>
+<script type="module" defer src="{% static 'scripts/nationalities.js' %}?version=10"></script>
+
+</html>
